@@ -539,11 +539,15 @@ const Index = () => {
             <div className="space-y-4">
               <h3 className="font-bold text-lg border-b border-white/20 pb-2 inline-block">Contatos</h3>
               <p className="flex items-center gap-2"><Mail className="w-4 h-4"/> upciga@gmail.com</p>
-              <p className="flex items-center gap-2"><Headset className="w-4 h-4"/> (83) 99900-7432</p>
-              <p className="opacity-80 text-sm mt-4">
-                Avenida Juarez Tavora<br/>
-                Empresarial Maximun - Sala 507<br/>
-                João Pessoa/PB
+              <p className="flex items-center gap-2"><Phone className="w-4 h-4"/> (83) 3034-3040 — Fixo</p>
+              <p className="flex items-center gap-2"><Headset className="w-4 h-4"/> (83) 99844-1515 — WhatsApp</p>
+              <p className="flex items-start gap-2 opacity-80 text-sm mt-4">
+                <MapPin className="w-4 h-4 mt-0.5 shrink-0"/>
+                <span>
+                  Av. Juarez Távora, Nº 522, Sala 309<br/>
+                  Torre — João Pessoa/PB<br/>
+                  CEP: 58040-020
+                </span>
               </p>
             </div>
             <div className="h-48 rounded-xl overflow-hidden bg-white/10 border border-white/20 shadow-inner">
@@ -559,7 +563,7 @@ const Index = () => {
             </div>
           </div>
           <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm opacity-60">
-            <p>© {new Date().getFullYear()} Upciga Sistemas. CNPJ: XX.XXX.XXX/0001-XX</p>
+            <p>© {new Date().getFullYear()} UpCiga Automação — Upciga Serviços de Informática LTDA. CNPJ: 27.686.124/0001-29</p>
             <div className="flex gap-6">
               <a href="#" className="hover:text-white transition-colors">Política de Privacidade</a>
               <a href="#" className="hover:text-white transition-colors">Termos de Uso</a>
