@@ -265,6 +265,59 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Sobre / Missão Visão Valores */}
+      <section id="sobre" className="py-24 bg-background">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <Badge variant="outline" className="mb-4 border-primary/30 text-primary">Sobre a UpCiga</Badge>
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">
+              Quem somos
+            </h2>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              A <strong>UpCiga Automação</strong> é uma empresa paraibana desenvolvedora de software de gestão e
+              automação comercial. Fundada para atender às necessidades de informatização de diversos segmentos
+              empresariais, oferecemos soluções para empresas de micro, pequeno e médio porte, com profissionais
+              experientes em gestão empresarial, tributária e fiscal.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-muted/30 p-8 rounded-2xl border border-border/50 hover:border-primary/50 transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
+                <Target className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Missão</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Desenvolver soluções em tecnologia para aumentar a produtividade dos nossos clientes,
+                facilitando todos os processos de gestão de seus negócios.
+              </p>
+            </div>
+            <div className="bg-muted/30 p-8 rounded-2xl border border-border/50 hover:border-primary/50 transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
+                <Eye className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Visão</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Ser a empresa que oferece os melhores e mais completos serviços de Tecnologia da Informação.
+              </p>
+            </div>
+            <div className="bg-muted/30 p-8 rounded-2xl border border-border/50 hover:border-primary/50 transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
+                <Heart className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Valores</h3>
+              <ul className="text-muted-foreground space-y-1.5">
+                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary" /> Comprometimento</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary" /> Ética</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary" /> Responsabilidade</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary" /> Inovação</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary" /> Agilidade</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Módulos do Sistema */}
       <section id="modulos" className="py-24 bg-background">
         <div className="container mx-auto px-4 md:px-6">
