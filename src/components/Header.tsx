@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import logoHorizontal from "@/assets/logo-horizontal.png";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isOpen, setIsOpen] = useState(false); // Controle do menu mobile
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,11 +15,23 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Bloqueia o scroll do body quando o menu está aberto
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   const scrollToSection = (id: string) => {
-    setIsOpen(false); // Fecha o menu mobile ao clicar
+    setIsOpen(false);
     const element = document.getElementById(id);
     if (element) {
-      const offset = 80; // Compensa a altura do header fixo
+      const offset = 80;
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
@@ -39,6 +50,52 @@ const Header = () => {
     { label: "Diferenciais", id: "diferenciais" },
     { label: "Módulos", id: "modulos" },
   ];
+
+  const menuVariants = {
+    closed: {
+      x: "100%",
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+      },
+    },
+    open: {
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+      },
+    },
+  };
+
+  const overlayVariants = {
+    closed: {
+      opacity: 0,
+      transition: { duration: 0.2 },
+    },
+    open: {
+      opacity: 1,
+      transition: { duration: 0.3 },
+    },
+  };
+
+  const itemVariants = {
+    closed: {
+      opacity: 0,
+      x: 20,
+    },
+    open: (i: number) => ({
+      opacity: 1,
+      x: 0,
+      transition: {
+        delay: 0.1 + i * 0.08,
+        duration: 0.4,
+        ease: [0.25, 0.46, 0.45, 0.94],
+      },
+    }),
+  };
 
   return (
     <header
@@ -83,37 +140,106 @@ const Header = () => {
           </Button>
         </div>
 
-        {/* Mobile Menu (Hambúrguer) */}
+        {/* Mobile Menu Toggle */}
         <div className="md:hidden">
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-foreground">
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Abrir menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px] flex flex-col pt-10">
-              <nav className="flex flex-col gap-4">
-                {navItems.map((item) => (
-                  <button
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="relative w-10 h-10 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-lg"
+            aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={isOpen}
+          >
+            <div className="w-6 h-5 relative flex flex-col justify-between">
+              <motion.span
+                className="w-full h-0.5 bg-foreground block rounded-full origin-left"
+                animate={isOpen ? { rotate: 45, y: -1, width: "100%" } : { rotate: 0, y: 0, width: "100%" }}
+                transition={{ duration: 0.25, ease: "easeInOut" }}
+              />
+              <motion.span
+                className="w-full h-0.5 bg-foreground block rounded-full"
+                animate={isOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
+                transition={{ duration: 0.2, ease: "easeInOut" }}
+              />
+              <motion.span
+                className="w-full h-0.5 bg-foreground block rounded-full origin-left"
+                animate={isOpen ? { rotate: -45, y: 1, width: "100%" } : { rotate: 0, y: 0, width: "100%" }}
+                transition={{ duration: 0.25, ease: "easeInOut" }}
+              />
+            </div>
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              className="fixed inset-0 bg-black/60 z-40 md:hidden"
+              variants={overlayVariants}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              onClick={() => setIsOpen(false)}
+            />
+
+            {/* Menu Panel */}
+            <motion.div
+              className="fixed top-0 right-0 bottom-0 w-[300px] sm:w-[350px] bg-background z-50 md:hidden shadow-2xl flex flex-col"
+              variants={menuVariants}
+              initial="closed"
+              animate="open"
+              exit="closed"
+            >
+              {/* Menu Header */}
+              <div className="h-20 flex items-center justify-between px-6 border-b border-border/50">
+                <span className="font-display font-bold text-lg text-foreground">Menu</span>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-muted transition-colors"
+                  aria-label="Fechar menu"
+                >
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                    <line x1="3" y1="3" x2="17" y2="17" />
+                    <line x1="17" y1="3" x2="3" y2="17" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Menu Items */}
+              <nav className="flex-1 flex flex-col px-6 pt-8 gap-1">
+                {navItems.map((item, i) => (
+                  <motion.button
                     key={item.id}
+                    custom={i}
+                    variants={itemVariants}
+                    initial="closed"
+                    animate="open"
                     onClick={() => scrollToSection(item.id)}
-                    className="text-lg font-medium text-left text-foreground hover:text-primary transition-colors py-2 border-b border-border/50"
+                    className="text-left text-lg font-medium text-foreground hover:text-primary transition-colors py-4 px-2 rounded-xl hover:bg-muted/80 active:scale-[0.98]"
                   >
                     {item.label}
-                  </button>
+                  </motion.button>
                 ))}
+              </nav>
+
+              {/* CTA Button */}
+              <motion.div
+                className="px-6 pb-8 pt-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0, transition: { delay: 0.45, duration: 0.4 } }}
+              >
                 <Button
                   onClick={() => scrollToSection("contato")}
-                  className="mt-4 bg-primary hover:bg-primary-hover w-full h-12 text-lg"
+                  className="w-full h-14 text-lg bg-primary hover:bg-primary-hover rounded-xl shadow-lg shadow-primary/20 transition-all active:scale-[0.98]"
                 >
                   Solicitar Demo
                 </Button>
-              </nav>
-            </SheetContent>
-          </Sheet>
-        </div>
-      </div>
+              </motion.div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </header>
   );
 };
