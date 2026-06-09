@@ -33,7 +33,12 @@ import {
   Wallet,
   Zap,
   ShieldCheck,
-  Database
+  Database,
+  Target,
+  Eye,
+  Heart,
+  Phone,
+  MapPin
 } from "lucide-react";
 import { toast } from "sonner";
 import Header from "@/components/Header";
@@ -52,41 +57,47 @@ import servicesImage from "@/assets/segment-services.jpg";
 import opticalImage from "@/assets/segment-optical.jpg";
 
 const segments = [
-  { id: "varejo", image: retailImage, title: "Varejo em Geral", description: "Controle de caixa e vendas ágil.", features: ["Frente de Caixa Rápido", "Etiquetas de Gôndola", "Controle de Estoque"] },
-  { id: "autopecas", image: autopartsImage, title: "Autopeças", description: "Gestão de milhares de itens.", features: ["Busca por Veículo", "Produtos Similares", "Comissão de Mecânicos"] },
-  { id: "farmacia", image: pharmacyImage, title: "Farmácia", description: "Segurança fiscal e SNGPC.", features: ["SNGPC Anvisa", "Farmácia Popular", "Controle de Lotes"] },
-  { id: "construcao", image: constructionImage, title: "Material de Construção", description: "Entregas e múltiplos depósitos.", features: ["Entrega Futura", "Gestão de Obras", "Venda Fracionada"] },
-  { id: "moda", image: fashionImage, title: "Moda e Calçados", description: "Grade de cor e tamanho.", features: ["Grade Completa", "Etiquetas de Código", "Crediário Próprio"] },
-  { id: "petshop", image: petshopImage, title: "Petshop & Vet", description: "Produtos e serviços.", features: ["Agenda de Banho/Tosa", "Histórico Clínico", "Vacinas"] },
-  { id: "distribuidora", image: distributionImage, title: "Distribuidora", description: "Logística e força de vendas.", features: ["App Força de Vendas", "Rotas de Entrega", "MDF-e"] },
-  { id: "servicos", image: servicesImage, title: "Serviços", description: "Contratos e OS.", features: ["Ordem de Serviço", "Contratos Recorrentes", "NFS-e"] },
-  { id: "otica", image: opticalImage, title: "Ótica", description: "Receituário e laboratório.", features: ["Receituário", "Ordens de Laboratório", "Histórico de Grau"] },
+  { id: "supermercado", image: retailImage, title: "Supermercados e Mercadinhos", description: "PDV ágil com venda fracionada e por balança.", features: ["Frente de caixa (PDV)", "Venda por código de barras, fracionada ou caixa", "Venda por código de balança, peso e quilo", "Atualização rápida de preços", "Preço ideal com base na última compra", "Consulta de preço facilitada"] },
+  { id: "farmacia", image: pharmacyImage, title: "Farmácias", description: "SNGPC, PBM's e Farmácia Popular integrados.", features: ["Farmácia Popular", "Integração com PBM's", "SNGPC", "Controle de lotes", "Contagem de estoque inteligente", "Controle de entrega"] },
+  { id: "otica", image: opticalImage, title: "Óticas", description: "Receituário e ordens de laboratório.", features: ["Controle do receituário dos clientes", "Emissão da posição das ordens de serviço", "Acompanhamento de pedidos de lentes", "Histórico por prestador de serviço"] },
+  { id: "moda", image: fashionImage, title: "Calçados e Roupas", description: "Grade de cor e tamanho completa.", features: ["Controle da grade por cor e tamanho", "Venda por código de referência", "Impressão de etiqueta por código de barras", "Crediário próprio"] },
+  { id: "restaurante", image: servicesImage, title: "Restaurantes e Bares", description: "Comanda, mesas e delivery integrados.", features: ["Controle de mesas e comandas", "Venda por Palm e/ou Smartphone", "Controle de matéria-prima", "Gestão de entregas (delivery)"] },
+  { id: "locacao", image: constructionImage, title: "Locação de Andaimes e Equipamentos", description: "Contratos, aditivos e faturamento recorrente.", features: ["Controle de contratos de locação e aditivos", "Digitalização dos contratos emitidos", "Faturamento mensal automático", "Geração automática de faturas de cobrança", "Envio automático de e-mails e faturas"] },
+  { id: "autopecas", image: autopartsImage, title: "Autopeças", description: "Gestão de milhares de itens e similares.", features: ["Cadastro de produtos agregados e similares", "Consulta no terminal", "Composição de kits", "Controle de cobrança por cobrador"] },
+  { id: "petshop", image: petshopImage, title: "Petshop & Pet Care", description: "Produtos com controle por lote e validade.", features: ["Controle por lote e validade", "Programa de fidelidade", "Cadastro de clientes e conveniados", "Promoções de ponta de estoque"] },
+  { id: "distribuidora", image: distributionImage, title: "Distribuidoras", description: "Logística, cargas e força de vendas.", features: ["Cálculo automático de carga e roteiro", "Transferência entre filiais", "Importação de XML (NF-e)", "Cotação com fornecedores"] },
 ];
 
 const modules = [
   {
-    title: "Vendas & PDV",
+    title: "Vendas",
     icon: ShoppingCart,
-    description: "O coração da sua loja batendo forte e rápido.",
-    features: ["Frente de caixa intuitivo", "Kits e Cestas", "Pré-venda no balcão", "NFC-e em 2 segundos"]
+    description: "Do orçamento à emissão da nota — tudo em um só lugar.",
+    features: ["Cadastro de clientes, fornecedores e vendedores", "Composição de kits e cestas", "Fidelização: pontuação e desconto para conveniados", "Envio de NF-e e NFC-e por e-mail", "Cálculo automático de juros", "Cálculo de carga e roteiro de entrega"]
   },
   {
-    title: "Estoque Inteligente",
+    title: "Estoque",
     icon: Package,
-    description: "Acabe com as perdas e furos no estoque.",
-    features: ["Importação XML (NFe)", "Curva ABC de produtos", "Inventário pelo celular", "Grade e Lotes"]
+    description: "Acabe com perdas e furos com inteligência de compras.",
+    features: ["Sugestão automática de compras", "Entrada por importação de XML", "Contagem cega com coletor de dados", "Leitor de código de barras", "Controle por lote, validade, grade e série", "Transferência automática entre filiais"]
   },
   {
-    title: "Financeiro Blindado",
+    title: "Financeiro",
     icon: Wallet,
-    description: "Controle total de cada centavo que entra e sai.",
-    features: ["Contas a Pagar/Receber", "Conciliação Bancária", "Gestão de Cartões", "DRE Gerencial"]
+    description: "Controle total do que entra e sai da sua empresa.",
+    features: ["Contas a Pagar e a Receber", "Controle de contas bancárias e cheques", "Remessa e retorno bancário", "Consulta automática ao SERASA", "Impressão de cheques e recibos", "Fechamento de caixas, convênios e cartões"]
   },
   {
     title: "Gestão Fiscal",
     icon: BarChart3,
-    description: "Tranquilidade com a Receita Federal.",
-    features: ["SPED Fiscal/Contribuições", "Sintegra", "Emissão de NFe/NFCe/MDF-e", "Cálculo automático de impostos"]
+    description: "Tranquilidade total com a Receita e a SEFAZ.",
+    features: ["Monofásico e SPED com inventário", "Homologado PAF-ECF", "NF-e e NFC-e", "EFD Fiscal e EFD PIS/COFINS", "Geração do Sintegra"]
+  },
+  {
+    title: "Gestão Administrativa",
+    icon: ShieldCheck,
+    description: "Decisões baseadas em dados reais do seu negócio.",
+    features: ["Análise de rentabilidade por setor", "Sugestão de preço de venda por fórmula", "Gerenciamento por categoria de produtos", "Emissão de DRE", "Controle patrimonial completo"]
   }
 ];
 
