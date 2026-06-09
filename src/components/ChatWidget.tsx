@@ -150,7 +150,7 @@ const ChatWidget = () => {
             </form>
             <div className="mt-2 text-center">
                <a 
-                 href="https://wa.me/5583999007432" 
+                 href="https://wa.me/5583998441515" 
                  target="_blank" 
                  rel="noopener noreferrer"
                  className="text-[10px] text-muted-foreground/80 hover:text-primary transition-colors uppercase tracking-wide font-semibold"

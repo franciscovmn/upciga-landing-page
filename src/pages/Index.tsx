@@ -531,7 +531,7 @@ const Index = () => {
                 Pronto para profissionalizar sua gestão? Agende uma visita técnica sem compromisso.
               </p>
               <Button variant="secondary" size="lg" asChild className="w-full sm:w-auto font-bold shadow-lg">
-                <a href="https://wa.me/5583999007432" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/5583998441515" target="_blank" rel="noopener noreferrer">
                   Chamar no WhatsApp
                 </a>
               </Button>
