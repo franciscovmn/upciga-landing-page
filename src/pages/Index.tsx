@@ -33,7 +33,12 @@ import {
   Wallet,
   Zap,
   ShieldCheck,
-  Database
+  Database,
+  Target,
+  Eye,
+  Heart,
+  Phone,
+  MapPin
 } from "lucide-react";
 import { toast } from "sonner";
 import Header from "@/components/Header";
@@ -52,41 +57,47 @@ import servicesImage from "@/assets/segment-services.jpg";
 import opticalImage from "@/assets/segment-optical.jpg";
 
 const segments = [
-  { id: "varejo", image: retailImage, title: "Varejo em Geral", description: "Controle de caixa e vendas ágil.", features: ["Frente de Caixa Rápido", "Etiquetas de Gôndola", "Controle de Estoque"] },
-  { id: "autopecas", image: autopartsImage, title: "Autopeças", description: "Gestão de milhares de itens.", features: ["Busca por Veículo", "Produtos Similares", "Comissão de Mecânicos"] },
-  { id: "farmacia", image: pharmacyImage, title: "Farmácia", description: "Segurança fiscal e SNGPC.", features: ["SNGPC Anvisa", "Farmácia Popular", "Controle de Lotes"] },
-  { id: "construcao", image: constructionImage, title: "Material de Construção", description: "Entregas e múltiplos depósitos.", features: ["Entrega Futura", "Gestão de Obras", "Venda Fracionada"] },
-  { id: "moda", image: fashionImage, title: "Moda e Calçados", description: "Grade de cor e tamanho.", features: ["Grade Completa", "Etiquetas de Código", "Crediário Próprio"] },
-  { id: "petshop", image: petshopImage, title: "Petshop & Vet", description: "Produtos e serviços.", features: ["Agenda de Banho/Tosa", "Histórico Clínico", "Vacinas"] },
-  { id: "distribuidora", image: distributionImage, title: "Distribuidora", description: "Logística e força de vendas.", features: ["App Força de Vendas", "Rotas de Entrega", "MDF-e"] },
-  { id: "servicos", image: servicesImage, title: "Serviços", description: "Contratos e OS.", features: ["Ordem de Serviço", "Contratos Recorrentes", "NFS-e"] },
-  { id: "otica", image: opticalImage, title: "Ótica", description: "Receituário e laboratório.", features: ["Receituário", "Ordens de Laboratório", "Histórico de Grau"] },
+  { id: "supermercado", image: retailImage, title: "Supermercados e Mercadinhos", description: "PDV ágil com venda fracionada e por balança.", features: ["Frente de caixa (PDV)", "Venda por código de barras, fracionada ou caixa", "Venda por código de balança, peso e quilo", "Atualização rápida de preços", "Preço ideal com base na última compra", "Consulta de preço facilitada"] },
+  { id: "farmacia", image: pharmacyImage, title: "Farmácias", description: "SNGPC, PBM's e Farmácia Popular integrados.", features: ["Farmácia Popular", "Integração com PBM's", "SNGPC", "Controle de lotes", "Contagem de estoque inteligente", "Controle de entrega"] },
+  { id: "otica", image: opticalImage, title: "Óticas", description: "Receituário e ordens de laboratório.", features: ["Controle do receituário dos clientes", "Emissão da posição das ordens de serviço", "Acompanhamento de pedidos de lentes", "Histórico por prestador de serviço"] },
+  { id: "moda", image: fashionImage, title: "Calçados e Roupas", description: "Grade de cor e tamanho completa.", features: ["Controle da grade por cor e tamanho", "Venda por código de referência", "Impressão de etiqueta por código de barras", "Crediário próprio"] },
+  { id: "restaurante", image: servicesImage, title: "Restaurantes e Bares", description: "Comanda, mesas e delivery integrados.", features: ["Controle de mesas e comandas", "Venda por Palm e/ou Smartphone", "Controle de matéria-prima", "Gestão de entregas (delivery)"] },
+  { id: "locacao", image: constructionImage, title: "Locação de Andaimes e Equipamentos", description: "Contratos, aditivos e faturamento recorrente.", features: ["Controle de contratos de locação e aditivos", "Digitalização dos contratos emitidos", "Faturamento mensal automático", "Geração automática de faturas de cobrança", "Envio automático de e-mails e faturas"] },
+  { id: "autopecas", image: autopartsImage, title: "Autopeças", description: "Gestão de milhares de itens e similares.", features: ["Cadastro de produtos agregados e similares", "Consulta no terminal", "Composição de kits", "Controle de cobrança por cobrador"] },
+  { id: "petshop", image: petshopImage, title: "Petshop & Pet Care", description: "Produtos com controle por lote e validade.", features: ["Controle por lote e validade", "Programa de fidelidade", "Cadastro de clientes e conveniados", "Promoções de ponta de estoque"] },
+  { id: "distribuidora", image: distributionImage, title: "Distribuidoras", description: "Logística, cargas e força de vendas.", features: ["Cálculo automático de carga e roteiro", "Transferência entre filiais", "Importação de XML (NF-e)", "Cotação com fornecedores"] },
 ];
 
 const modules = [
   {
-    title: "Vendas & PDV",
+    title: "Vendas",
     icon: ShoppingCart,
-    description: "O coração da sua loja batendo forte e rápido.",
-    features: ["Frente de caixa intuitivo", "Kits e Cestas", "Pré-venda no balcão", "NFC-e em 2 segundos"]
+    description: "Do orçamento à emissão da nota — tudo em um só lugar.",
+    features: ["Cadastro de clientes, fornecedores e vendedores", "Composição de kits e cestas", "Fidelização: pontuação e desconto para conveniados", "Envio de NF-e e NFC-e por e-mail", "Cálculo automático de juros", "Cálculo de carga e roteiro de entrega"]
   },
   {
-    title: "Estoque Inteligente",
+    title: "Estoque",
     icon: Package,
-    description: "Acabe com as perdas e furos no estoque.",
-    features: ["Importação XML (NFe)", "Curva ABC de produtos", "Inventário pelo celular", "Grade e Lotes"]
+    description: "Acabe com perdas e furos com inteligência de compras.",
+    features: ["Sugestão automática de compras", "Entrada por importação de XML", "Contagem cega com coletor de dados", "Leitor de código de barras", "Controle por lote, validade, grade e série", "Transferência automática entre filiais"]
   },
   {
-    title: "Financeiro Blindado",
+    title: "Financeiro",
     icon: Wallet,
-    description: "Controle total de cada centavo que entra e sai.",
-    features: ["Contas a Pagar/Receber", "Conciliação Bancária", "Gestão de Cartões", "DRE Gerencial"]
+    description: "Controle total do que entra e sai da sua empresa.",
+    features: ["Contas a Pagar e a Receber", "Controle de contas bancárias e cheques", "Remessa e retorno bancário", "Consulta automática ao SERASA", "Impressão de cheques e recibos", "Fechamento de caixas, convênios e cartões"]
   },
   {
     title: "Gestão Fiscal",
     icon: BarChart3,
-    description: "Tranquilidade com a Receita Federal.",
-    features: ["SPED Fiscal/Contribuições", "Sintegra", "Emissão de NFe/NFCe/MDF-e", "Cálculo automático de impostos"]
+    description: "Tranquilidade total com a Receita e a SEFAZ.",
+    features: ["Monofásico e SPED com inventário", "Homologado PAF-ECF", "NF-e e NFC-e", "EFD Fiscal e EFD PIS/COFINS", "Geração do Sintegra"]
+  },
+  {
+    title: "Gestão Administrativa",
+    icon: ShieldCheck,
+    description: "Decisões baseadas em dados reais do seu negócio.",
+    features: ["Análise de rentabilidade por setor", "Sugestão de preço de venda por fórmula", "Gerenciamento por categoria de produtos", "Emissão de DRE", "Controle patrimonial completo"]
   }
 ];
 
@@ -251,6 +262,59 @@ const Index = () => {
                   <p className="text-sm text-muted-foreground">Caiu a internet? Sua loja continua vendendo, emitindo cupom e recebendo.</p>
                </div>
             </div>
+        </div>
+      </section>
+
+      {/* Sobre / Missão Visão Valores */}
+      <section id="sobre" className="py-24 bg-background">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <Badge variant="outline" className="mb-4 border-primary/30 text-primary">Sobre a UpCiga</Badge>
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">
+              Quem somos
+            </h2>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              A <strong>UpCiga Automação</strong> é uma empresa paraibana desenvolvedora de software de gestão e
+              automação comercial. Fundada para atender às necessidades de informatização de diversos segmentos
+              empresariais, oferecemos soluções para empresas de micro, pequeno e médio porte, com profissionais
+              experientes em gestão empresarial, tributária e fiscal.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-muted/30 p-8 rounded-2xl border border-border/50 hover:border-primary/50 transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
+                <Target className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Missão</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Desenvolver soluções em tecnologia para aumentar a produtividade dos nossos clientes,
+                facilitando todos os processos de gestão de seus negócios.
+              </p>
+            </div>
+            <div className="bg-muted/30 p-8 rounded-2xl border border-border/50 hover:border-primary/50 transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
+                <Eye className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Visão</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Ser a empresa que oferece os melhores e mais completos serviços de Tecnologia da Informação.
+              </p>
+            </div>
+            <div className="bg-muted/30 p-8 rounded-2xl border border-border/50 hover:border-primary/50 transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
+                <Heart className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Valores</h3>
+              <ul className="text-muted-foreground space-y-1.5">
+                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary" /> Comprometimento</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary" /> Ética</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary" /> Responsabilidade</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary" /> Inovação</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary" /> Agilidade</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -467,7 +531,7 @@ const Index = () => {
                 Pronto para profissionalizar sua gestão? Agende uma visita técnica sem compromisso.
               </p>
               <Button variant="secondary" size="lg" asChild className="w-full sm:w-auto font-bold shadow-lg">
-                <a href="https://wa.me/5583999007432" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/5583998441515" target="_blank" rel="noopener noreferrer">
                   Chamar no WhatsApp
                 </a>
               </Button>
@@ -475,11 +539,15 @@ const Index = () => {
             <div className="space-y-4">
               <h3 className="font-bold text-lg border-b border-white/20 pb-2 inline-block">Contatos</h3>
               <p className="flex items-center gap-2"><Mail className="w-4 h-4"/> upciga@gmail.com</p>
-              <p className="flex items-center gap-2"><Headset className="w-4 h-4"/> (83) 99900-7432</p>
-              <p className="opacity-80 text-sm mt-4">
-                Avenida Juarez Tavora<br/>
-                Empresarial Maximun - Sala 507<br/>
-                João Pessoa/PB
+              <p className="flex items-center gap-2"><Phone className="w-4 h-4"/> (83) 3034-3040 — Fixo</p>
+              <p className="flex items-center gap-2"><Headset className="w-4 h-4"/> (83) 99844-1515 — WhatsApp</p>
+              <p className="flex items-start gap-2 opacity-80 text-sm mt-4">
+                <MapPin className="w-4 h-4 mt-0.5 shrink-0"/>
+                <span>
+                  Av. Juarez Távora, Nº 522, Sala 309<br/>
+                  Torre — João Pessoa/PB<br/>
+                  CEP: 58040-020
+                </span>
               </p>
             </div>
             <div className="h-48 rounded-xl overflow-hidden bg-white/10 border border-white/20 shadow-inner">
@@ -495,7 +563,7 @@ const Index = () => {
             </div>
           </div>
           <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm opacity-60">
-            <p>© {new Date().getFullYear()} Upciga Sistemas. CNPJ: XX.XXX.XXX/0001-XX</p>
+            <p>© {new Date().getFullYear()} UpCiga Automação — Upciga Serviços de Informática LTDA. CNPJ: 27.686.124/0001-29</p>
             <div className="flex gap-6">
               <a href="#" className="hover:text-white transition-colors">Política de Privacidade</a>
               <a href="#" className="hover:text-white transition-colors">Termos de Uso</a>

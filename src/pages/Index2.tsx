@@ -633,7 +633,7 @@ const Index = () => {
               <h2 className="text-2xl font-bold mb-6">Fale Conosco</h2>
               <p className="opacity-90 mb-6">Pronto para transformar sua gestão?</p>
               <Button variant="secondary" size="lg" asChild className="w-full sm:w-auto font-bold">
-                <a href="https://wa.me/5583999007432" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/5583998441515" target="_blank" rel="noopener noreferrer">
                   Chamar no WhatsApp
                 </a>
               </Button>
